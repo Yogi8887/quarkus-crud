@@ -3,16 +3,26 @@ package com.yogi.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "employee_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "employee_id_seq",
+            sequenceName = "employee_seq",
+            allocationSize = 5
+    )
     private Long id;
     private String name;
     @JsonManagedReference
-    @OneToOne(mappedBy = "employee",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "employeeId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Aadhar aadhar;
-   // private List<Address> addressList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "employeeId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Address> addresses = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -36,5 +46,13 @@ public class Employee {
 
     public void setAadhar(Aadhar aadhar) {
         this.aadhar = aadhar;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }
