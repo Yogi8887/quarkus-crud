@@ -1,16 +1,28 @@
 package com.yogi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "address_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "address_id_seq",
+            sequenceName = "address_seq",
+            allocationSize = 5
+    )
     private Long id;
     private String cityName;
+
+    //@JsonbTransient
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    public Employee employeeId;
 
     public Long getId() {
         return id;
@@ -26,5 +38,13 @@ public class Address {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public Employee getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Employee employeeId) {
+        this.employeeId = employeeId;
     }
 }

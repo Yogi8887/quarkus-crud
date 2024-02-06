@@ -3,6 +3,7 @@ package com.yogi.response;
 public class AadharResponse {
     private Long id;
     private String aadharNumber;
+    private Long employeeId;
 
     public Long getId() {
         return id;
@@ -18,5 +19,13 @@ public class AadharResponse {
 
     public void setAadharNumber(String aadharNumber) {
         this.aadharNumber = aadharNumber;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 }

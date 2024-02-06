@@ -1,9 +1,13 @@
 package com.yogi.response;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EmployeeResponse {
     private Long id;
     private String name;
     private AadharResponse aadharResponse;
+    private List<AddressResponse> addressResponse = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -27,5 +31,13 @@ public class EmployeeResponse {
 
     public void setAadharResponse(AadharResponse aadharResponse) {
         this.aadharResponse = aadharResponse;
+    }
+
+    public List<AddressResponse> getAddressResponse() {
+        return addressResponse;
+    }
+
+    public void setAddressResponse(List<AddressResponse> addressResponse) {
+        this.addressResponse = addressResponse;
     }
 }

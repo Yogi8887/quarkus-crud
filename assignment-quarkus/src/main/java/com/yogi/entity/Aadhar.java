@@ -2,17 +2,26 @@ package com.yogi.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Aadhar {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "aadhar_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "aadhar_id_seq",
+            sequenceName = "aadhar_seq",
+            allocationSize = 5
+    )
     private Long id;
+    @Column(unique = true)
+    @Size(min = 12, max = 12)
     private String aadharNumber;
 
     @OneToOne
     @JsonBackReference
-    private Employee employee;
+    @JoinColumn(name="employee_id")
+    private Employee employeeId;
 
     public Long getId() {
         return id;
@@ -30,11 +39,11 @@ public class Aadhar {
         this.aadharNumber = aadharNumber;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Employee getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeId(Employee employeeId) {
+        this.employeeId = employeeId;
     }
 }
